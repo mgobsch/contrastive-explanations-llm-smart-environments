@@ -6,7 +6,7 @@ The whole study is **one web page** (`index.html`). Participants do not play a r
 
 **Study link:** https://mgobsch.github.io/contrastive-explanations-llm-smart-environments/study/
 **Preview link (nothing is saved):** https://mgobsch.github.io/contrastive-explanations-llm-smart-environments/study/?preview=1
-**LimeSurvey (part 1, optional):** https://survey.uni-koeln.de/index.php/326863?
+**LimeSurvey (part 1, optional):** https://survey.uni-koeln.de/index.php/326863
 
 ---
 
