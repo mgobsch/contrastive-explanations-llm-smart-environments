@@ -213,7 +213,7 @@ details.debug pre{white-space:pre-wrap;overflow-x:auto;max-height:300px;backgrou
    1) STUDY SETTINGS — edit freely
    ===================================================================== */
 const SETTINGS = {
-  TEST_MODE: false,          // true = shows the collected data on the end screen (set false for the real study)
+  TEST_MODE: true,          // true = shows the collected data on the end screen (set false for the real study)
   SURVEY_RETURN_URL: "",    // optional link at the end ("" = no button)
   // Web-app URL of the Google Apps Script (see ANLEITUNG_Google_Tabelle.md). "" = do not send.
   SAVE_URL: "https://script.google.com/macros/s/AKfycbyBGfO6RDba2spBhiVWhUjT29SonANE-kgL7lo9TQwanpd7uWh-LdfHcrkZ4HKvY0Yj/exec",
@@ -231,10 +231,10 @@ const SETTINGS = {
   //   only starts when a code is present. false = the page runs on its own (consent + "About you" included).
   // Preview: click through freely, nothing is saved, no answers required. Also via the link ?preview=1
   PREVIEW_MODE: false,
-  LIMESURVEY_MODE: true,
-  LIMESURVEY_URL: "https://survey.uni-koeln.de/index.php/326863",
+  LIMESURVEY_MODE: false,
+  LIMESURVEY_URL: "https://survey.uni-koeln.de/index.php/326863?lang=de",
   // Quality / bot checks (only mark answers in the sheet, nobody is excluded automatically)
-  MIN_TOTAL_MINUTES: 3,     // faster than this for the whole study -> flag_too_fast
+  MIN_TOTAL_MINUTES: 5,     // faster than this for the whole study -> flag_too_fast
   READING_WPM: 300,         // a rating page faster than reading all its explanations at this speed -> flag_too_fast
 };
 

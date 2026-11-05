@@ -1,0 +1,374 @@
+[
+  {
+    "id": "TC4",
+    "cc_type": "CC2",
+    "description": "The Meeting Room Occupied rule triggered but a device error prevented the status light from responding.",
+    "explainee": {
+      "id": "2",
+      "name": "Bob",
+      "role": "COWORKER",
+      "technicality": "Ntch"
+    },
+    "fact": {
+      "rule_id": null,
+      "rule_name": "Error — Meeting Room Occupied",
+      "outcome": "The status light did not change. A device error prevented the action from completing."
+    },
+    "foil": {
+      "rule_id": "2",
+      "rule_name": "Meeting Room Occupied",
+      "c0_topsis_score": null
+    },
+    "errors": [
+      {
+        "name": "Incorrect installation error",
+        "error_id": "e_light_inst",
+        "action": "status light (light.meeting_room_status_light) — state: error",
+        "implication": "Light is not connected correctly.",
+        "solution": "Check wiring and connection."
+      }
+    ],
+    "system_state": [
+      {
+        "device": "status_light",
+        "state": "error"
+      },
+      {
+        "device": "meeting_room_door",
+        "state": "closed"
+      },
+      {
+        "device": "meeting_room_motion",
+        "state": "detected"
+      },
+      {
+        "device": "weather",
+        "state": "cloudy"
+      },
+      {
+        "device": "clock",
+        "state": "09:31"
+      },
+      {
+        "device": "ventilation",
+        "state": "off"
+      },
+      {
+        "device": "robo_cleaner",
+        "state": "off"
+      },
+      {
+        "device": "robo_cleaner_sensor",
+        "state": "docked"
+      },
+      {
+        "device": "temperature_sensor",
+        "state": "22.8°C"
+      },
+      {
+        "device": "workday_sensor",
+        "state": "on"
+      },
+      {
+        "device": "desk_lamp",
+        "state": "on"
+      },
+      {
+        "device": "coffee_machine",
+        "state": "on"
+      },
+      {
+        "device": "co2_sensor",
+        "state": "620 ppm"
+      },
+      {
+        "device": "office_window",
+        "state": "closed"
+      },
+      {
+        "device": "thermostat",
+        "state": "21.5°C"
+      },
+      {
+        "device": "printer_sensor",
+        "state": "78%"
+      },
+      {
+        "device": "front_door_lock",
+        "state": "unlocked"
+      },
+      {
+        "device": "hallway_motion",
+        "state": "detected"
+      },
+      {
+        "device": "blinds",
+        "state": "open"
+      },
+      {
+        "device": "desk_occupancy",
+        "state": "occupied"
+      }
+    ],
+    "user_question": "Why is the light off?",
+    "c0_output": "An 'Incorrect installation error' occurred so the status_light is not orange.",
+    "candidate_rules": [
+      {
+        "rule_id": "2",
+        "attributes": {
+          "precondition_similarity": null,
+          "ownership": null,
+          "frequency": null,
+          "occurrence": null
+        },
+        "c0_topsis_score": null
+      }
+    ]
+  },
+  {
+    "id": "TC5",
+    "cc_type": "CC1",
+    "description": "A different rule fired than the one the user expected.",
+    "explainee": {
+      "id": "2",
+      "name": "Bob",
+      "role": "COWORKER",
+      "technicality": "Ntch"
+    },
+    "fact": {
+      "rule_id": "7",
+      "rule_name": "Ventilation On",
+      "outcome": "The ventilation turned on."
+    },
+    "foil": {
+      "rule_id": "5",
+      "rule_name": "Danger",
+      "c0_topsis_score": null
+    },
+    "system_state": [
+      {
+        "device": "status_light",
+        "state": "green"
+      },
+      {
+        "device": "meeting_room_door",
+        "state": "closed"
+      },
+      {
+        "device": "meeting_room_motion",
+        "state": "clear"
+      },
+      {
+        "device": "weather",
+        "state": "sunny"
+      },
+      {
+        "device": "clock",
+        "state": "13:15"
+      },
+      {
+        "device": "ventilation",
+        "state": "on"
+      },
+      {
+        "device": "robo_cleaner",
+        "state": "off"
+      },
+      {
+        "device": "robo_cleaner_sensor",
+        "state": "docked"
+      },
+      {
+        "device": "temperature_sensor",
+        "state": "26.5°C"
+      },
+      {
+        "device": "workday_sensor",
+        "state": "on"
+      },
+      {
+        "device": "desk_lamp",
+        "state": "on"
+      },
+      {
+        "device": "coffee_machine",
+        "state": "off"
+      },
+      {
+        "device": "co2_sensor",
+        "state": "550 ppm"
+      },
+      {
+        "device": "office_window",
+        "state": "open"
+      },
+      {
+        "device": "thermostat",
+        "state": "24.0°C"
+      },
+      {
+        "device": "printer_sensor",
+        "state": "70%"
+      },
+      {
+        "device": "front_door_lock",
+        "state": "unlocked"
+      },
+      {
+        "device": "hallway_motion",
+        "state": "detected"
+      },
+      {
+        "device": "blinds",
+        "state": "closed"
+      },
+      {
+        "device": "desk_occupancy",
+        "state": "occupied"
+      },
+      {
+        "device": "smoke_detector",
+        "state": "off"
+      },
+      {
+        "device": "co2_detector",
+        "state": "off"
+      },
+      {
+        "device": "fire_alarm",
+        "state": "off"
+      }
+    ],
+    "user_question": "Why did the ventilation turn on — was there a danger alert?",
+    "c0_output": "The ventilation is on and not high because Temperature High is 26.5.",
+    "candidate_rules": [
+      {
+        "rule_id": "5",
+        "attributes": {
+          "precondition_similarity": 0.0,
+          "ownership": 0,
+          "frequency": 1,
+          "occurrence": 0
+        },
+        "c0_topsis_score": null
+      }
+    ]
+  },
+  {
+    "id": "TC6",
+    "cc_type": "CC3",
+    "description": "No rule fired, but the user expected one to. The trigger condition was never met because the robo cleaner lost power and never reported being docked.",
+    "explainee": {
+      "id": "3",
+      "name": "Hanna",
+      "role": "COWORKER",
+      "technicality": "Med"
+    },
+    "fact": {
+      "rule_id": null,
+      "rule_name": null,
+      "outcome": "No automation rule fired. The robo cleaner did not start."
+    },
+    "foil": {
+      "rule_id": "8",
+      "rule_name": "Clean Office Overnight",
+      "c0_topsis_score": null
+    },
+    "system_state": [
+      {
+        "device": "status_light",
+        "state": "off"
+      },
+      {
+        "device": "meeting_room_door",
+        "state": "closed"
+      },
+      {
+        "device": "meeting_room_motion",
+        "state": "clear"
+      },
+      {
+        "device": "weather",
+        "state": "cloudy"
+      },
+      {
+        "device": "clock",
+        "state": "07:30"
+      },
+      {
+        "device": "ventilation",
+        "state": "off"
+      },
+      {
+        "device": "robo_cleaner",
+        "state": "off"
+      },
+      {
+        "device": "robo_cleaner_sensor",
+        "state": "off"
+      },
+      {
+        "device": "temperature_sensor",
+        "state": "19.5°C"
+      },
+      {
+        "device": "workday_sensor",
+        "state": "on"
+      },
+      {
+        "device": "desk_lamp",
+        "state": "off"
+      },
+      {
+        "device": "coffee_machine",
+        "state": "off"
+      },
+      {
+        "device": "co2_sensor",
+        "state": "400 ppm"
+      },
+      {
+        "device": "office_window",
+        "state": "closed"
+      },
+      {
+        "device": "thermostat",
+        "state": "19.0°C"
+      },
+      {
+        "device": "printer_sensor",
+        "state": "88%"
+      },
+      {
+        "device": "front_door_lock",
+        "state": "locked"
+      },
+      {
+        "device": "hallway_motion",
+        "state": "clear"
+      },
+      {
+        "device": "blinds",
+        "state": "closed"
+      },
+      {
+        "device": "desk_occupancy",
+        "state": "clear"
+      }
+    ],
+    "user_question": "Why didn't the robo cleaner start last night?",
+    "c0_output": "The robo_cleaner did not start because the trigger condition 'Robo Cleaner Docked' was never met: the device reported 'off' (not docked) throughout the night.",
+    "candidate_rules": [
+      {
+        "rule_id": "8",
+        "attributes": {
+          "precondition_similarity": null,
+          "ownership": 1,
+          "frequency": 64,
+          "occurrence": 3
+        },
+        "c0_topsis_score": null
+      }
+    ]
+  }
+]

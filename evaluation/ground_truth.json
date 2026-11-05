@@ -1,0 +1,818 @@
+{
+  "schema_version": "3.0",
+  "rubric_version": "six-criteria-system-prompt",
+  "metadata": {
+    "purpose": "Evaluate faithfulness to the supplied experimental scenario; not independently verify real system execution or a real user mental state.",
+    "verification": "Profiles, 60 snapshot entries, shared references, and represented original rule fields checked against project exports. Engine implementation and event logs unavailable.",
+    "source_files": {
+      "ground_truth.json": {
+        "sha256": "fc60fe518e2825de09b6d246791cc13d1012dfe0c7793994d58fa8a6bcf4d1a9"
+      },
+      "test_cases.json": {
+        "sha256": "3e28ac89ae14a53198739e42ad713030678add3e8aa86011ef567db1b94a5fc6"
+      },
+      "rules_db.json": {
+        "sha256": "03492a15bd3799cee90f4b37512a5b873aa87b2e29c103a2312bd9e4cf57de5d"
+      },
+      "system_data.json": {
+        "sha256": "771834473d94cb299ca084452d8612f0faa2138308c4783e5c31417e27f71221"
+      },
+      "prompt_c1_zeroshot.md": {
+        "sha256": "dd014e4d454ab8ad0262589fc9e6af150a723b050219ad2ba7dbacecf488f4b6"
+      },
+      "prompt_c3_zeroshot.md": {
+        "sha256": "c717817b3363b1da8d866604e0d5eb33fbc10175a21feef8d74d316e206b55a5"
+      }
+    },
+    "unresolved": [
+      "Trigger and condition evaluation semantics are not verified.",
+      "Rain-rule non-occurrence and TC3 Rule 1 non-occurrence have no established cause.",
+      "Source descriptions referring to all lights exceed structured action scope.",
+      "Few-shot expected answers contain unsupported histories/diagnoses."
+    ]
+  },
+  "shared_reference": {
+    "users": [
+      {
+        "user_id": "1",
+        "name": "Alice",
+        "role": "COWORKER",
+        "technicality": "MEDTECH"
+      },
+      {
+        "user_id": "2",
+        "name": "Bob",
+        "role": "COWORKER",
+        "technicality": "NONTECH"
+      },
+      {
+        "user_id": "3",
+        "name": "Hanna",
+        "role": "COWORKER",
+        "technicality": "MEDTECH"
+      }
+    ],
+    "entities": [
+      {
+        "entity_id": "light.meeting_room_status_light",
+        "device_name": "status_light"
+      },
+      {
+        "entity_id": "binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_2",
+        "device_name": "meeting_room_door"
+      },
+      {
+        "entity_id": "binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2",
+        "device_name": "meeting_room_motion"
+      },
+      {
+        "entity_id": "weather.xmart_lab",
+        "device_name": "weather"
+      },
+      {
+        "entity_id": "sensor.worldclock_sensor",
+        "device_name": "clock"
+      },
+      {
+        "entity_id": "fan.meeting_room_ventilation",
+        "device_name": "ventilation"
+      },
+      {
+        "entity_id": "switch.robo_cleaner_switch",
+        "device_name": "robo_cleaner"
+      },
+      {
+        "entity_id": "binary_sensor.robo_cleaner_docked",
+        "device_name": "robo_cleaner_sensor"
+      },
+      {
+        "entity_id": "sensor.meeting_room_temperature",
+        "device_name": "temperature_sensor"
+      },
+      {
+        "entity_id": "binary_sensor.workday_sensor",
+        "device_name": "workday_sensor"
+      },
+      {
+        "entity_id": "light.office_desk_lamp",
+        "device_name": "desk_lamp"
+      },
+      {
+        "entity_id": "switch.coffee_machine_switch",
+        "device_name": "coffee_machine"
+      },
+      {
+        "entity_id": "sensor.office_co2_sensor",
+        "device_name": "co2_sensor"
+      },
+      {
+        "entity_id": "binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_3",
+        "device_name": "office_window"
+      },
+      {
+        "entity_id": "climate.office_thermostat",
+        "device_name": "thermostat"
+      },
+      {
+        "entity_id": "sensor.printer_paper_level",
+        "device_name": "printer_sensor"
+      },
+      {
+        "entity_id": "lock.front_door_lock",
+        "device_name": "front_door_lock"
+      },
+      {
+        "entity_id": "binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3",
+        "device_name": "hallway_motion"
+      },
+      {
+        "entity_id": "cover.office_blinds",
+        "device_name": "blinds"
+      },
+      {
+        "entity_id": "sensor.desk_occupancy_sensor",
+        "device_name": "desk_occupancy"
+      }
+    ]
+  },
+  "state_aliases": {
+    "meeting_room_door": {
+      "on": "open",
+      "off": "closed"
+    },
+    "meeting_room_motion": {
+      "Detected": "detected",
+      "clear": "clear"
+    },
+    "technicality": {
+      "Med": "MEDTECH",
+      "Ntch": "NONTECH"
+    }
+  },
+  "rule_catalog": {
+    "1": {
+      "name": "Meeting room not occupied",
+      "ruleId": "1",
+      "ruleEntry": {
+        "name": "Rule: Meeting Room Not Occupied",
+        "entity_id": "automation.rule_meeting_room_not_occupied",
+        "state": "null"
+      },
+      "triggers": [
+        {
+          "name": "Contact Sensor Meeting Room Opening",
+          "entity_id": "binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_2",
+          "state": "on"
+        }
+      ],
+      "conditions": [
+        {
+          "name": "No Motion in meeting room",
+          "entity_id": "binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2",
+          "state": "clear"
+        }
+      ],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light green",
+          "entity_id": "light.meeting_room_status_light",
+          "state": "green"
+        }
+      ],
+      "ownerId": "1",
+      "ruleDescription": "Rule_1: turns the meeting room status light green if the room is not occupied",
+      "aliases": [
+        "Meeting room not occupied",
+        "Rule: Meeting Room Not Occupied",
+        "Meeting Room Not Occupied"
+      ],
+      "semantics": {
+        "trigger_evaluation": "unknown",
+        "condition_evaluation": "unknown",
+        "event_history_available": false
+      },
+      "authoritative_action_source": "actions",
+      "description_caveat": "Descriptions are source text; structured actions govern action scope. All-lights descriptions do not establish actions on unlisted lights."
+    },
+    "2": {
+      "name": "Meeting room occupied",
+      "ruleId": "2",
+      "ruleEntry": {
+        "name": "Rule: Meeting Room Occupied",
+        "entity_id": "automation.rule_meeting_room_occupied",
+        "state": "null"
+      },
+      "triggers": [
+        {
+          "name": "Contact Sensor Meeting Room Opening",
+          "entity_id": "binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_2",
+          "state": "off"
+        }
+      ],
+      "conditions": [
+        {
+          "name": "Occupancy of meeting room",
+          "entity_id": "binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2",
+          "state": "Detected"
+        }
+      ],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light orange",
+          "entity_id": "light.meeting_room_status_light",
+          "state": "orange"
+        }
+      ],
+      "ownerId": "1",
+      "ruleDescription": "Rule_2: turns the meeting room status light orange if the room is occupied",
+      "aliases": [
+        "Meeting room occupied",
+        "Rule: Meeting Room Occupied",
+        "Meeting Room Occupied"
+      ],
+      "semantics": {
+        "trigger_evaluation": "unknown",
+        "condition_evaluation": "unknown",
+        "event_history_available": false
+      },
+      "authoritative_action_source": "actions",
+      "description_caveat": "Descriptions are source text; structured actions govern action scope. All-lights descriptions do not establish actions on unlisted lights."
+    },
+    "3": {
+      "name": "Rain at lunch",
+      "ruleId": "3",
+      "ruleEntry": {
+        "name": "Rule: Rain At Lunch",
+        "entity_id": "automation.rule_rain_at_lunch",
+        "state": "null"
+      },
+      "triggers": [
+        {
+          "name": "Forecast Xmart-Lab",
+          "entity_id": "weather.xmart_lab",
+          "state": "rainy"
+        }
+      ],
+      "conditions": [
+        {
+          "name": "Time between 11 am and 1 pm",
+          "entity_id": "sensor.worldclock_sensor",
+          "state": "11:00-13:00"
+        }
+      ],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light blue",
+          "entity_id": "light.meeting_room_status_light",
+          "state": "blue"
+        }
+      ],
+      "ownerId": "2",
+      "ruleDescription": "Rule_3: turns all lights blue if rain at lunch is expected",
+      "aliases": [
+        "Rain at lunch",
+        "Rule: Rain At Lunch",
+        "Rain at Lunch"
+      ],
+      "semantics": {
+        "trigger_evaluation": "unknown",
+        "condition_evaluation": "unknown",
+        "event_history_available": false
+      },
+      "authoritative_action_source": "actions",
+      "description_caveat": "Descriptions are source text; structured actions govern action scope. All-lights descriptions do not establish actions on unlisted lights."
+    },
+    "4": {
+      "name": "Sunny at lunch",
+      "ruleId": "4",
+      "ruleEntry": {
+        "name": "Rule: Sunny At Lunch",
+        "entity_id": "automation.rule_sunny_at_lunch",
+        "state": "null"
+      },
+      "triggers": [
+        {
+          "name": "Forecast Xmart-Lab",
+          "entity_id": "weather.xmart_lab",
+          "state": "sunny"
+        }
+      ],
+      "conditions": [
+        {
+          "name": "Time between 11 am and 1 pm",
+          "entity_id": "sensor.worldclock_sensor",
+          "state": "11:00-13:00"
+        }
+      ],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light orange",
+          "entity_id": "light.meeting_room_status_light",
+          "state": "orange"
+        }
+      ],
+      "ownerId": "2",
+      "ruleDescription": "Rule_4: turns all lights orange if sunny at lunch is expected",
+      "aliases": [
+        "Sunny at lunch",
+        "Rule: Sunny At Lunch",
+        "Sunny at Lunch"
+      ],
+      "semantics": {
+        "trigger_evaluation": "unknown",
+        "condition_evaluation": "unknown",
+        "event_history_available": false
+      },
+      "authoritative_action_source": "actions",
+      "description_caveat": "Descriptions are source text; structured actions govern action scope. All-lights descriptions do not establish actions on unlisted lights."
+    },
+    "5": {
+      "name": "Danger",
+      "ruleId": "5",
+      "ruleEntry": {
+        "name": "Rule: Danger",
+        "entity_id": "automation.danger",
+        "state": "null"
+      },
+      "triggers": [
+        {
+          "name": "Smoke detected",
+          "entity_id": "binary_sensor.smoke_detector",
+          "state": "on"
+        },
+        {
+          "name": "CO2 detected",
+          "entity_id": "binary_sensor.co2_detector",
+          "state": "on"
+        },
+        {
+          "name": "Fire alarm",
+          "entity_id": "binary_sensor.fire_alarm",
+          "state": "on"
+        }
+      ],
+      "conditions": [
+        {
+          "name": "Time between 8 am and 6 pm",
+          "entity_id": "sensor.worldclock_sensor",
+          "state": "08:00-18:00"
+        }
+      ],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light orange",
+          "entity_id": "light.meeting_room_status_light",
+          "state": "orange"
+        },
+        {
+          "name": "Turn Ventilation Fan high",
+          "entity_id": "fan.meeting_room_ventilation",
+          "state": "high"
+        }
+      ],
+      "ownerId": "1",
+      "ruleDescription": "Rule_5: turns the meeting room status light orange if danger occurs",
+      "aliases": [
+        "Danger",
+        "Rule: Danger"
+      ],
+      "semantics": {
+        "trigger_evaluation": "unknown",
+        "condition_evaluation": "unknown",
+        "event_history_available": false
+      },
+      "authoritative_action_source": "actions",
+      "description_caveat": "Descriptions are source text; structured actions govern action scope. All-lights descriptions do not establish actions on unlisted lights."
+    },
+    "6": {
+      "name": "Closing time",
+      "ruleId": "6",
+      "ruleEntry": {
+        "name": "Rule: Closing Time",
+        "entity_id": "automation.rule_closing_time",
+        "state": "null"
+      },
+      "triggers": [
+        {
+          "name": "Time is evening",
+          "entity_id": "sensor.worldclock_sensor",
+          "state": "18:00-23:00"
+        }
+      ],
+      "conditions": [],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light off",
+          "entity_id": "light.meeting_room_status_light",
+          "state": "off"
+        }
+      ],
+      "ownerId": "1",
+      "ruleDescription": "Rule_6: turns all lights off in the evening",
+      "aliases": [
+        "Closing time",
+        "Rule: Closing Time",
+        "Closing Time"
+      ],
+      "semantics": {
+        "trigger_evaluation": "unknown",
+        "condition_evaluation": "unknown",
+        "event_history_available": false
+      },
+      "authoritative_action_source": "actions",
+      "description_caveat": "Descriptions are source text; structured actions govern action scope. All-lights descriptions do not establish actions on unlisted lights."
+    }
+  },
+  "test_cases": {
+    "TC1": {
+      "cc_type": "CC1",
+      "description": "A different rule fired than the one the user expected.",
+      "explainee": {
+        "id": "1",
+        "name": "Alice",
+        "role": "COWORKER",
+        "technicality": "Med"
+      },
+      "user_question": "Why is the light orange?",
+      "actual_event": {
+        "fired_rule_ids": [
+          "2"
+        ],
+        "outcome": "The meeting room status light turned orange."
+      },
+      "system_snapshot": {
+        "observation_time": "12:08",
+        "timing": "source labels this at time of event; ordering relative to trigger/action is unspecified",
+        "states": [
+          {
+            "device": "status_light",
+            "state": "orange"
+          },
+          {
+            "device": "meeting_room_door",
+            "state": "closed"
+          },
+          {
+            "device": "meeting_room_motion",
+            "state": "detected"
+          },
+          {
+            "device": "weather",
+            "state": "rainy"
+          },
+          {
+            "device": "clock",
+            "state": "12:08"
+          },
+          {
+            "device": "ventilation",
+            "state": "off"
+          },
+          {
+            "device": "robo_cleaner",
+            "state": "off"
+          },
+          {
+            "device": "robo_cleaner_sensor",
+            "state": "docked"
+          },
+          {
+            "device": "temperature_sensor",
+            "state": "22.8°C"
+          },
+          {
+            "device": "workday_sensor",
+            "state": "on"
+          },
+          {
+            "device": "desk_lamp",
+            "state": "on"
+          },
+          {
+            "device": "coffee_machine",
+            "state": "on"
+          },
+          {
+            "device": "co2_sensor",
+            "state": "620 ppm"
+          },
+          {
+            "device": "office_window",
+            "state": "closed"
+          },
+          {
+            "device": "thermostat",
+            "state": "21.5°C"
+          },
+          {
+            "device": "printer_sensor",
+            "state": "78%"
+          },
+          {
+            "device": "front_door_lock",
+            "state": "unlocked"
+          },
+          {
+            "device": "hallway_motion",
+            "state": "detected"
+          },
+          {
+            "device": "blinds",
+            "state": "open"
+          },
+          {
+            "device": "desk_occupancy",
+            "state": "occupied"
+          }
+        ]
+      },
+      "active_rule_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "candidate_rule_ids": [
+        "1",
+        "3",
+        "6"
+      ],
+      "baseline_foil_rule_id": "1",
+      "evidence_limits": {
+        "event_evidence": "Accept the declared event as the test-case fact; no independent execution logs are available.",
+        "history_and_semantics": "No event/action history; trigger evaluation semantics and snapshot ordering are unverified. A missing transition is not established.",
+        "priority": "No rule priority or override is documented.",
+        "causal_evidence": "Supported failed necessary conditions may explain blocking. Matching snapshot values alone do not establish trigger occurrence; exact non-occurrence causes are not documented.",
+        "expectation_evidence": "Baseline foil selected by TOPSIS; C1/C2 generation input labels its foil expected. No independent real-user confirmation; C3 expectations are inferred.",
+        "case_specific": "Rule 2 attribution is declared. Why the rainy-lunch rule did not occur is not established."
+      }
+    },
+    "TC2": {
+      "cc_type": "CC1",
+      "description": "A different rule fired than the one the user expected.",
+      "explainee": {
+        "id": "2",
+        "name": "Bob",
+        "role": "COWORKER",
+        "technicality": "Ntch"
+      },
+      "user_question": "Why is the light orange?",
+      "actual_event": {
+        "fired_rule_ids": [
+          "2"
+        ],
+        "outcome": "The meeting room status light turned orange."
+      },
+      "system_snapshot": {
+        "observation_time": "12:10",
+        "timing": "source labels this at time of event; ordering relative to trigger/action is unspecified",
+        "states": [
+          {
+            "device": "status_light",
+            "state": "orange"
+          },
+          {
+            "device": "meeting_room_door",
+            "state": "closed"
+          },
+          {
+            "device": "meeting_room_motion",
+            "state": "detected"
+          },
+          {
+            "device": "weather",
+            "state": "rainy"
+          },
+          {
+            "device": "clock",
+            "state": "12:10"
+          },
+          {
+            "device": "ventilation",
+            "state": "off"
+          },
+          {
+            "device": "robo_cleaner",
+            "state": "off"
+          },
+          {
+            "device": "robo_cleaner_sensor",
+            "state": "docked"
+          },
+          {
+            "device": "temperature_sensor",
+            "state": "22.8°C"
+          },
+          {
+            "device": "workday_sensor",
+            "state": "on"
+          },
+          {
+            "device": "desk_lamp",
+            "state": "on"
+          },
+          {
+            "device": "coffee_machine",
+            "state": "on"
+          },
+          {
+            "device": "co2_sensor",
+            "state": "620 ppm"
+          },
+          {
+            "device": "office_window",
+            "state": "closed"
+          },
+          {
+            "device": "thermostat",
+            "state": "21.5°C"
+          },
+          {
+            "device": "printer_sensor",
+            "state": "78%"
+          },
+          {
+            "device": "front_door_lock",
+            "state": "unlocked"
+          },
+          {
+            "device": "hallway_motion",
+            "state": "detected"
+          },
+          {
+            "device": "blinds",
+            "state": "open"
+          },
+          {
+            "device": "desk_occupancy",
+            "state": "occupied"
+          }
+        ]
+      },
+      "active_rule_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "candidate_rule_ids": [
+        "1",
+        "3",
+        "6"
+      ],
+      "baseline_foil_rule_id": "3",
+      "evidence_limits": {
+        "event_evidence": "Accept the declared event as the test-case fact; no independent execution logs are available.",
+        "history_and_semantics": "No event/action history; trigger evaluation semantics and snapshot ordering are unverified. A missing transition is not established.",
+        "priority": "No rule priority or override is documented.",
+        "causal_evidence": "Supported failed necessary conditions may explain blocking. Matching snapshot values alone do not establish trigger occurrence; exact non-occurrence causes are not documented.",
+        "expectation_evidence": "Baseline foil selected by TOPSIS; C1/C2 generation input labels its foil expected. No independent real-user confirmation; C3 expectations are inferred.",
+        "case_specific": "Rule 2 attribution is declared. Why the rainy-lunch rule did not occur is not established."
+      }
+    },
+    "TC3": {
+      "cc_type": "CC3",
+      "description": "No rule fired, but the user expected one to.",
+      "explainee": {
+        "id": "1",
+        "name": "Alice",
+        "role": "COWORKER",
+        "technicality": "Med"
+      },
+      "user_question": "Why is the light off?",
+      "actual_event": {
+        "fired_rule_ids": [],
+        "outcome": "No automation rule fired. The status light remained off."
+      },
+      "system_snapshot": {
+        "observation_time": "08:00",
+        "timing": "source labels this at time of event; ordering relative to trigger/action is unspecified",
+        "states": [
+          {
+            "device": "status_light",
+            "state": "off"
+          },
+          {
+            "device": "meeting_room_door",
+            "state": "open"
+          },
+          {
+            "device": "meeting_room_motion",
+            "state": "clear"
+          },
+          {
+            "device": "weather",
+            "state": "sunny"
+          },
+          {
+            "device": "clock",
+            "state": "08:00"
+          },
+          {
+            "device": "ventilation",
+            "state": "off"
+          },
+          {
+            "device": "robo_cleaner",
+            "state": "off"
+          },
+          {
+            "device": "robo_cleaner_sensor",
+            "state": "docked"
+          },
+          {
+            "device": "temperature_sensor",
+            "state": "21.0°C"
+          },
+          {
+            "device": "workday_sensor",
+            "state": "on"
+          },
+          {
+            "device": "desk_lamp",
+            "state": "off"
+          },
+          {
+            "device": "coffee_machine",
+            "state": "off"
+          },
+          {
+            "device": "co2_sensor",
+            "state": "420 ppm"
+          },
+          {
+            "device": "office_window",
+            "state": "closed"
+          },
+          {
+            "device": "thermostat",
+            "state": "20.5°C"
+          },
+          {
+            "device": "printer_sensor",
+            "state": "90%"
+          },
+          {
+            "device": "front_door_lock",
+            "state": "locked"
+          },
+          {
+            "device": "hallway_motion",
+            "state": "clear"
+          },
+          {
+            "device": "blinds",
+            "state": "closed"
+          },
+          {
+            "device": "desk_occupancy",
+            "state": "clear"
+          }
+        ]
+      },
+      "active_rule_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "candidate_rule_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "baseline_foil_rule_id": "1",
+      "evidence_limits": {
+        "event_evidence": "Accept the declared event as the test-case fact; no independent execution logs are available.",
+        "history_and_semantics": "No event/action history; trigger evaluation semantics and snapshot ordering are unverified. A missing transition is not established.",
+        "priority": "No rule priority or override is documented.",
+        "causal_evidence": "Supported failed necessary conditions may explain blocking. Matching snapshot values alone do not establish trigger occurrence; exact non-occurrence causes are not documented.",
+        "expectation_evidence": "Baseline foil selected by TOPSIS; C1/C2 generation input labels its foil expected. No independent real-user confirmation; C3 expectations are inferred.",
+        "case_specific": "No firing is declared, although snapshot values match Rule 1. The cause is unresolved; do not assume missing transitions or unmet conditions."
+      }
+    }
+  },
+  "generation_context": {
+    "C1": {
+      "expectation_status": "supplied_as_expected",
+      "evidence": "run_tests.py build_foil_block and C1 system prompt"
+    },
+    "C2": {
+      "expectation_status": "supplied_as_expected",
+      "evidence": "run_tests.py C2 explanation stage invokes C1 with selected foil"
+    },
+    "C3": {
+      "expectation_status": "inferred_plausible",
+      "evidence": "C3 prompt requests most plausibly expected alternative; not observed user testimony"
+    }
+  }
+}

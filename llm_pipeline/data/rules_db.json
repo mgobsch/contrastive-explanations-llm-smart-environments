@@ -1,0 +1,203 @@
+{
+  "1": {
+    "name": "Meeting room not occupied",
+    "ruleId": "1",
+    "ruleEntry": {
+      "name": "Rule: Meeting Room Not Occupied",
+      "entity_id": "automation.rule_meeting_room_not_occupied",
+      "state": "null"
+    },
+    "triggers": [
+      {
+        "name": "Contact Sensor Meeting Room Opening",
+        "entity_id": "binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_2",
+        "state": "on"
+      }
+    ],
+    "conditions": [
+      {
+        "name": "No Motion in meeting room",
+        "entity_id": "binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2",
+        "state": "clear"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Turn Meeting Room Status Light green",
+        "entity_id": "light.meeting_room_status_light",
+        "state": "green"
+      }
+    ],
+    "ownerId": "1",
+    "ruleDescription": "Rule_1: turns the meeting room status light green if the room is not occupied"
+  },
+  "2": {
+    "name": "Meeting room occupied",
+    "ruleId": "2",
+    "ruleEntry": {
+      "name": "Rule: Meeting Room Occupied",
+      "entity_id": "automation.rule_meeting_room_occupied",
+      "state": "null"
+    },
+    "triggers": [
+      {
+        "name": "Contact Sensor Meeting Room Opening",
+        "entity_id": "binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_2",
+        "state": "off"
+      }
+    ],
+    "conditions": [
+      {
+        "name": "Occupancy of meeting room",
+        "entity_id": "binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2",
+        "state": "Detected"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Turn Meeting Room Status Light orange",
+        "entity_id": "light.meeting_room_status_light",
+        "state": "orange"
+      }
+    ],
+    "ownerId": "1",
+    "ruleDescription": "Rule_2: turns the meeting room status light orange if the room is occupied"
+  },
+  "3": {
+    "name": "Rain at lunch",
+    "ruleId": "3",
+    "ruleEntry": {
+      "name": "Rule: Rain At Lunch",
+      "entity_id": "automation.rule_rain_at_lunch",
+      "state": "null"
+    },
+    "triggers": [
+      {
+        "name": "Forecast Xmart-Lab",
+        "entity_id": "weather.xmart_lab",
+        "state": "rainy"
+      }
+    ],
+    "conditions": [
+      {
+        "name": "Time between 11 am and 1 pm",
+        "entity_id": "sensor.worldclock_sensor",
+        "state": "11:00-13:00"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Turn Meeting Room Status Light blue",
+        "entity_id": "light.meeting_room_status_light",
+        "state": "blue"
+      }
+    ],
+    "ownerId": "2",
+    "ruleDescription": "Rule_3: turns all lights blue if rain at lunch is expected"
+  },
+  "4": {
+    "name": "Sunny at lunch",
+    "ruleId": "4",
+    "ruleEntry": {
+      "name": "Rule: Sunny At Lunch",
+      "entity_id": "automation.rule_sunny_at_lunch",
+      "state": "null"
+    },
+    "triggers": [
+      {
+        "name": "Forecast Xmart-Lab",
+        "entity_id": "weather.xmart_lab",
+        "state": "sunny"
+      }
+    ],
+    "conditions": [
+      {
+        "name": "Time between 11 am and 1 pm",
+        "entity_id": "sensor.worldclock_sensor",
+        "state": "11:00-13:00"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Turn Meeting Room Status Light orange",
+        "entity_id": "light.meeting_room_status_light",
+        "state": "orange"
+      }
+    ],
+    "ownerId": "2",
+    "ruleDescription": "Rule_4: turns all lights orange if sunny at lunch is expected"
+  },
+  "5": {
+    "name": "Danger",
+    "ruleId": "5",
+    "ruleEntry": {
+      "name": "Rule: Danger",
+      "entity_id": "automation.danger",
+      "state": "null"
+    },
+    "triggers": [
+      {
+        "name": "Smoke detected",
+        "entity_id": "binary_sensor.smoke_detector",
+        "state": "on"
+      },
+      {
+        "name": "CO2 detected",
+        "entity_id": "binary_sensor.co2_detector",
+        "state": "on"
+      },
+      {
+        "name": "Fire alarm",
+        "entity_id": "binary_sensor.fire_alarm",
+        "state": "on"
+      }
+    ],
+    "conditions": [
+      {
+        "name": "Time between 8 am and 6 pm",
+        "entity_id": "sensor.worldclock_sensor",
+        "state": "08:00-18:00"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Turn Meeting Room Status Light orange",
+        "entity_id": "light.meeting_room_status_light",
+        "state": "orange"
+      },
+      {
+        "name": "Turn Ventilation Fan high",
+        "entity_id": "fan.meeting_room_ventilation",
+        "state": "high"
+      }
+    ],
+    "ownerId": "1",
+    "ruleDescription": "Rule_5: turns the meeting room status light orange if danger occurs"
+  },
+  "6": {
+    "name": "Closing time",
+    "ruleId": "6",
+    "ruleEntry": {
+      "name": "Rule: Closing Time",
+      "entity_id": "automation.rule_closing_time",
+      "state": "null"
+    },
+    "triggers": [
+      {
+        "name": "Time is evening",
+        "entity_id": "sensor.worldclock_sensor",
+        "state": "18:00-23:00"
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "name": "Turn Meeting Room Status Light off",
+        "entity_id": "light.meeting_room_status_light",
+        "state": "off"
+      }
+    ],
+    "ownerId": "1",
+    "ruleDescription": "Rule_6: turns all lights off in the evening"
+  }
+}

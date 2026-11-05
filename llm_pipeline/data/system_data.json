@@ -1,0 +1,523 @@
+{
+  "metadata": {
+    "description": "Authoritative reference data for SmartEx thesis experiments. Built from YAML seed files in SmartEx-Engine-new.",
+    "sources": ["rules.yaml", "users.yaml", "entities.yaml", "errors.yaml", "generate_demo_logs.py", "demoLogs.json"],
+    "purpose": "Bachelor's thesis: Contrastive Explanations in Smart Environments"
+  },
+
+  "users": [
+    {
+      "user_id": "1",
+      "name": "Alice",
+      "role": "COWORKER",
+      "technicality": "MEDTECH"
+    },
+    {
+      "user_id": "2",
+      "name": "Bob",
+      "role": "COWORKER",
+      "technicality": "NONTECH"
+    },
+    {
+      "user_id": "3",
+      "name": "Hanna",
+      "role": "COWORKER",
+      "technicality": "MEDTECH"
+    }
+  ],
+
+  "entities": [
+    {
+      "entity_id": "light.meeting_room_status_light",
+      "device_name": "status_light"
+    },
+    {
+      "entity_id": "binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_2",
+      "device_name": "meeting_room_door"
+    },
+    {
+      "entity_id": "binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2",
+      "device_name": "meeting_room_motion"
+    },
+    {
+      "entity_id": "weather.xmart_lab",
+      "device_name": "weather"
+    },
+    {
+      "entity_id": "sensor.worldclock_sensor",
+      "device_name": "clock"
+    },
+    {
+      "entity_id": "fan.meeting_room_ventilation",
+      "device_name": "ventilation"
+    },
+    {
+      "entity_id": "switch.robo_cleaner_switch",
+      "device_name": "robo_cleaner"
+    },
+    {
+      "entity_id": "binary_sensor.robo_cleaner_docked",
+      "device_name": "robo_cleaner_sensor"
+    },
+    {
+      "entity_id": "sensor.meeting_room_temperature",
+      "device_name": "temperature_sensor"
+    },
+    {
+      "entity_id": "binary_sensor.workday_sensor",
+      "device_name": "workday_sensor"
+    },
+    {
+      "entity_id": "light.office_desk_lamp",
+      "device_name": "desk_lamp"
+    },
+    {
+      "entity_id": "switch.coffee_machine_switch",
+      "device_name": "coffee_machine"
+    },
+    {
+      "entity_id": "sensor.office_co2_sensor",
+      "device_name": "co2_sensor"
+    },
+    {
+      "entity_id": "binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_3",
+      "device_name": "office_window"
+    },
+    {
+      "entity_id": "climate.office_thermostat",
+      "device_name": "thermostat"
+    },
+    {
+      "entity_id": "sensor.printer_paper_level",
+      "device_name": "printer_sensor"
+    },
+    {
+      "entity_id": "lock.front_door_lock",
+      "device_name": "front_door_lock"
+    },
+    {
+      "entity_id": "binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3",
+      "device_name": "hallway_motion"
+    },
+    {
+      "entity_id": "cover.office_blinds",
+      "device_name": "blinds"
+    },
+    {
+      "entity_id": "sensor.desk_occupancy_sensor",
+      "device_name": "desk_occupancy"
+    }
+  ],
+
+  "errors": [
+    {
+      "error_id": "e1",
+      "name": "No. 04: DEEBOT gets stuck while working and stops",
+      "actions": [
+        {
+          "name": "Deebot last error",
+          "entity_id": "sensor.deebot_last_error",
+          "state": "104"
+        }
+      ],
+      "implication": "DEEBOT is tangled with something on the floor or might be stuck under furniture",
+      "solution": "If DEEBOT can not free itself, manually remove the obstacles and restart"
+    },
+    {
+      "error_id": "e_light_inst",
+      "name": "Incorrect installation error",
+      "actions": [
+        {
+          "name": "Light connection error",
+          "entity_id": "light.meeting_room_status_light",
+          "state": "error"
+        }
+      ],
+      "implication": "Light is not connected correctly",
+      "solution": "Check wiring and connection"
+    },
+    {
+      "error_id": "e_vent_offline",
+      "name": "Ventilation Unreachable",
+      "actions": [
+        {
+          "name": "Ventilation Command Failed",
+          "entity_id": "fan.meeting_room_ventilation",
+          "state": "unreachable"
+        }
+      ],
+      "implication": "Ventilation fan is offline or network unreachable",
+      "solution": "Check power and network connection of the fan"
+    }
+  ],
+
+  "rules": [
+    {
+      "rule_id": "1",
+      "name": "Meeting Room Not Occupied",
+      "entry_name": "Rule: Meeting Room Not Occupied",
+      "entry_entity_id": "automation.rule_meeting_room_not_occupied",
+      "owner_id": "1",
+      "description": "Rule_1: turns the meeting room status light green if the room is not occupied",
+      "triggers": [
+        {
+          "name": "Contact Sensor Meeting Room Opening",
+          "entity_id": "binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_2",
+          "device_name": "meeting_room_door",
+          "state": "on",
+          "state_human": "open"
+        }
+      ],
+      "conditions": [
+        {
+          "name": "No Motion in meeting room",
+          "entity_id": "binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2",
+          "device_name": "meeting_room_motion",
+          "state": "clear"
+        }
+      ],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light green",
+          "entity_id": "light.meeting_room_status_light",
+          "device_name": "status_light",
+          "state": "green"
+        }
+      ],
+      "trigger_str": "meeting_room_door = open",
+      "conditions_str": "meeting_room_motion = clear",
+      "action_str": "status_light → green",
+      "notes": "Trigger state 'on' for a binary door sensor means the door is OPEN (contact broken). This is the inverse of 'closed'."
+    },
+    {
+      "rule_id": "2",
+      "name": "Meeting Room Occupied",
+      "entry_name": "Rule: Meeting Room Occupied",
+      "entry_entity_id": "automation.rule_meeting_room_occupied",
+      "owner_id": "1",
+      "description": "Rule_2: turns the meeting room status light orange if the room is occupied",
+      "triggers": [
+        {
+          "name": "Contact Sensor Meeting Room Opening",
+          "entity_id": "binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_2",
+          "device_name": "meeting_room_door",
+          "state": "off",
+          "state_human": "closed"
+        }
+      ],
+      "conditions": [
+        {
+          "name": "Occupancy of meeting room",
+          "entity_id": "binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2",
+          "device_name": "meeting_room_motion",
+          "state": "Detected"
+        }
+      ],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light orange",
+          "entity_id": "light.meeting_room_status_light",
+          "device_name": "status_light",
+          "state": "orange"
+        }
+      ],
+      "trigger_str": "meeting_room_door = closed",
+      "conditions_str": "meeting_room_motion = detected",
+      "action_str": "status_light → orange"
+    },
+    {
+      "rule_id": "3",
+      "name": "Rain at Lunch",
+      "entry_name": "Rule: Rain At Lunch",
+      "entry_entity_id": "automation.rule_rain_at_lunch",
+      "owner_id": "2",
+      "description": "Rule_3: turns all lights blue if rain at lunch is expected",
+      "triggers": [
+        {
+          "name": "Forecast Xmart-Lab",
+          "entity_id": "weather.xmart_lab",
+          "device_name": "weather",
+          "state": "rainy"
+        }
+      ],
+      "conditions": [
+        {
+          "name": "Time between 11 am and 1 pm",
+          "entity_id": "sensor.worldclock_sensor",
+          "device_name": "clock",
+          "state": "11:00-13:00"
+        }
+      ],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light blue",
+          "entity_id": "light.meeting_room_status_light",
+          "device_name": "status_light",
+          "state": "blue"
+        }
+      ],
+      "trigger_str": "weather = rainy",
+      "conditions_str": "clock = 11:00-13:00",
+      "action_str": "status_light → blue"
+    },
+    {
+      "rule_id": "4",
+      "name": "Sunny at Lunch",
+      "entry_name": "Rule: Sunny At Lunch",
+      "entry_entity_id": "automation.rule_sunny_at_lunch",
+      "owner_id": "2",
+      "description": "Rule_4: turns all lights orange if sunny at lunch is expected",
+      "triggers": [
+        {
+          "name": "Forecast Xmart-Lab",
+          "entity_id": "weather.xmart_lab",
+          "device_name": "weather",
+          "state": "sunny"
+        }
+      ],
+      "conditions": [
+        {
+          "name": "Time between 11 am and 1 pm",
+          "entity_id": "sensor.worldclock_sensor",
+          "device_name": "clock",
+          "state": "11:00-13:00"
+        }
+      ],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light orange",
+          "entity_id": "light.meeting_room_status_light",
+          "device_name": "status_light",
+          "state": "orange"
+        }
+      ],
+      "trigger_str": "weather = sunny",
+      "conditions_str": "clock = 11:00-13:00",
+      "action_str": "status_light → orange"
+    },
+    {
+      "rule_id": "5",
+      "name": "Danger",
+      "entry_name": "Rule: Danger",
+      "entry_entity_id": "automation.danger",
+      "owner_id": "1",
+      "description": "Rule_5: turns the meeting room status light orange and sets ventilation to high if danger occurs",
+      "triggers": [
+        {
+          "name": "Smoke detected",
+          "entity_id": "binary_sensor.smoke_detector",
+          "device_name": "smoke_detector",
+          "state": "on"
+        },
+        {
+          "name": "CO2 detected",
+          "entity_id": "binary_sensor.co2_detector",
+          "device_name": "co2_detector",
+          "state": "on"
+        },
+        {
+          "name": "Fire alarm",
+          "entity_id": "binary_sensor.fire_alarm",
+          "device_name": "fire_alarm",
+          "state": "on"
+        }
+      ],
+      "conditions": [
+        {
+          "name": "Time between 8 am and 6 pm",
+          "entity_id": "sensor.worldclock_sensor",
+          "device_name": "clock",
+          "state": "08:00-18:00"
+        }
+      ],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light orange",
+          "entity_id": "light.meeting_room_status_light",
+          "device_name": "status_light",
+          "state": "orange"
+        },
+        {
+          "name": "Turn Ventilation Fan high",
+          "entity_id": "fan.meeting_room_ventilation",
+          "device_name": "ventilation",
+          "state": "high"
+        }
+      ],
+      "trigger_str": "smoke_detector = on OR co2_detector = on OR fire_alarm = on",
+      "conditions_str": "clock = 08:00-18:00",
+      "action_str": "status_light → orange; ventilation → high"
+    },
+    {
+      "rule_id": "6",
+      "name": "Closing Time",
+      "entry_name": "Rule: Closing Time",
+      "entry_entity_id": "automation.rule_closing_time",
+      "owner_id": "1",
+      "description": "Rule_6: turns all lights off in the evening",
+      "triggers": [
+        {
+          "name": "Time is evening",
+          "entity_id": "sensor.worldclock_sensor",
+          "device_name": "clock",
+          "state": "18:00-23:00"
+        }
+      ],
+      "conditions": [],
+      "actions": [
+        {
+          "name": "Turn Meeting Room Status Light off",
+          "entity_id": "light.meeting_room_status_light",
+          "device_name": "status_light",
+          "state": "off"
+        }
+      ],
+      "trigger_str": "clock = 18:00-23:00",
+      "conditions_str": "(none)",
+      "action_str": "status_light → off",
+      "notes": "No preconditions. Earlier versions of rules_db.json incorrectly added a fabricated condition 'meeting_room_motion = clear'."
+    },
+    {
+      "rule_id": "7",
+      "name": "Ventilation On",
+      "entry_name": "Rule: Ventilation On",
+      "entry_entity_id": "automation.rule_ventilation_on",
+      "owner_id": "2",
+      "description": "Rule_7: Turns on ventilation if temperature > 26C",
+      "triggers": [
+        {
+          "name": "Temperature High",
+          "entity_id": "sensor.meeting_room_temperature",
+          "device_name": "temperature_sensor",
+          "state": "26.5"
+        }
+      ],
+      "conditions": [],
+      "actions": [
+        {
+          "name": "Turn Ventilation Fan on",
+          "entity_id": "fan.meeting_room_ventilation",
+          "device_name": "ventilation",
+          "state": "on"
+        }
+      ],
+      "trigger_str": "temperature_sensor > 26.5°C",
+      "conditions_str": "(none)",
+      "action_str": "ventilation → on"
+    },
+    {
+      "rule_id": "8",
+      "name": "Clean Office Overnight",
+      "entry_name": "Rule: Clean Office Overnight",
+      "entry_entity_id": "automation.rule_clean_office",
+      "owner_id": "3",
+      "description": "Rule_8: Starts cleaning if robot is docked at night",
+      "triggers": [
+        {
+          "name": "Robo Cleaner Docked",
+          "entity_id": "binary_sensor.robo_cleaner_docked",
+          "device_name": "robo_cleaner_sensor",
+          "state": "on",
+          "state_human": "docked"
+        }
+      ],
+      "conditions": [
+        {
+          "name": "Time is Night",
+          "entity_id": "sensor.worldclock_sensor",
+          "device_name": "clock",
+          "state": "02:00-04:00"
+        },
+	{
+          "name": "Day is Weekday",
+          "entity_id": "binary_sensor.workday_sensor",
+          "device_name": "workday_sensor",
+          "state": "on"
+        }
+      ],
+      "actions": [
+        {
+          "name": "Start Cleaning",
+          "entity_id": "switch.robo_cleaner_switch",
+          "device_name": "robo_cleaner",
+          "state": "on"
+        }
+      ],
+      "trigger_str": "robo_cleaner_sensor = docked",
+      "conditions_str": "clock = 02:00-04:00",
+      "action_str": "robo_cleaner → start"
+    }
+  ],
+
+  "frequency": {
+    "note": "Number of times each rule fired in demoLogs.json (total across all log entries).",
+    "per_rule": {
+      "1": { "name": "Rule: Meeting Room Not Occupied", "count": 65 },
+      "2": { "name": "Rule: Meeting Room Occupied",     "count": 66 },
+      "3": { "name": "Rule: Rain At Lunch",             "count": 4  },
+      "4": { "name": "Rule: Sunny At Lunch",            "count": 86 },
+      "5": { "name": "Rule: Danger",                    "count": 1  },
+      "6": { "name": "Rule: Closing Time",              "count": 90 },
+      "7": { "name": "Rule: Ventilation On",            "count": 46 },
+      "8": { "name": "Rule: Clean Office Overnight",   "count": 64 }
+    }
+  },
+
+  "occurrence": {
+    "note": "Max number of context entries (past firings shown to the LLM per explanation). Global = cap per call. Per-user = how many times that user actually experienced the rule (attributed via rule ownerId).",
+    "global_limit": {
+      "1":  { "name": "Rule: Meeting Room Not Occupied", "limit": 3 },
+      "2":  { "name": "Rule: Meeting Room Occupied",     "limit": 1 },
+      "3":  { "name": "Rule: Rain At Lunch",             "limit": 12 },
+      "4":  { "name": "Rule: Sunny At Lunch",            "limit": 4 },
+      "5":  { "name": "Rule: Danger",                    "limit": 0 },
+      "6":  { "name": "Rule: Closing Time",              "limit": 0 },
+      "7":  { "name": "Rule: Ventilation On",            "limit": 5 },
+      "8": { "name": "Rule: Clean Office Overnight",    "limit": 3 }
+    },
+    "per_user": {
+      "1": {
+        "name": "Alice",
+        "technicality": "MEDTECH",
+        "rules": {
+          "1":  { "name": "Rule: Meeting Room Not Occupied", "count": 3 },
+          "2":  { "name": "Rule: Meeting Room Occupied",     "count": 1 },
+          "3":  { "name": "Rule: Rain At Lunch",             "count": 4 },
+          "4":  { "name": "Rule: Sunny At Lunch",            "count": 2 },
+          "5":  { "name": "Rule: Danger",                    "count": 0 },
+          "6":  { "name": "Rule: Closing Time",              "count": 0 },
+          "7":  { "name": "Rule: Ventilation On",            "count": 0 },
+          "8": { "name": "Rule: Clean Office Overnight",    "count": 0 }
+        }
+      },
+      "2": {
+        "name": "Bob",
+        "technicality": "NONTECH",
+        "rules": {
+          "1":  { "name": "Rule: Meeting Room Not Occupied", "count": 0 },
+          "2":  { "name": "Rule: Meeting Room Occupied",     "count": 0 },
+          "3":  { "name": "Rule: Rain At Lunch",             "count": 8 },
+          "4":  { "name": "Rule: Sunny At Lunch",            "count": 2 },
+          "5":  { "name": "Rule: Danger",                    "count": 0 },
+          "6":  { "name": "Rule: Closing Time",              "count": 0 },
+          "7":  { "name": "Rule: Ventilation On",            "count": 5 },
+          "8": { "name": "Rule: Clean Office Overnight",    "count": 0 }
+        }
+      },
+      "3": {
+        "name": "Hanna",
+        "technicality": "MEDTECH",
+        "rules": {
+          "1":  { "name": "Rule: Meeting Room Not Occupied", "count": 0 },
+          "2":  { "name": "Rule: Meeting Room Occupied",     "count": 0 },
+          "3":  { "name": "Rule: Rain At Lunch",             "count": 0 },
+          "4":  { "name": "Rule: Sunny At Lunch",            "count": 0 },
+          "5":  { "name": "Rule: Danger",                    "count": 0 },
+          "6":  { "name": "Rule: Closing Time",              "count": 0 },
+          "7":  { "name": "Rule: Ventilation On",            "count": 0 },
+          "8": { "name": "Rule: Clean Office Overnight",    "count": 3 }
+        }
+      }
+    }
+  }
+}

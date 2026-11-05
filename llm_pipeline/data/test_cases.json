@@ -1,0 +1,467 @@
+[
+  {
+    "id": "TC1",
+    "cc_type": "CC1",
+    "description": "A different rule fired than the one the user expected.",
+    "explainee": {
+      "id": "1",
+      "name": "Alice",
+      "role": "COWORKER",
+      "technicality": "Med"
+    },
+    "fact": {
+      "rule_id": "2",
+      "rule_name": "Meeting Room Occupied",
+      "outcome": "The meeting room status light turned orange."
+    },
+    "foil": {
+      "rule_id": "1",
+      "rule_name": "Meeting Room Not Occupied",
+      "c0_topsis_score": 0.830026
+    },
+    "system_state": [
+      {
+        "device": "status_light",
+        "state": "orange"
+      },
+      {
+        "device": "meeting_room_door",
+        "state": "closed"
+      },
+      {
+        "device": "meeting_room_motion",
+        "state": "detected"
+      },
+      {
+        "device": "weather",
+        "state": "rainy"
+      },
+      {
+        "device": "clock",
+        "state": "12:08"
+      },
+      {
+        "device": "ventilation",
+        "state": "off"
+      },
+      {
+        "device": "robo_cleaner",
+        "state": "off"
+      },
+      {
+        "device": "robo_cleaner_sensor",
+        "state": "docked"
+      },
+      {
+        "device": "temperature_sensor",
+        "state": "22.8\u00b0C"
+      },
+      {
+        "device": "workday_sensor",
+        "state": "on"
+      },
+      {
+        "device": "desk_lamp",
+        "state": "on"
+      },
+      {
+        "device": "coffee_machine",
+        "state": "on"
+      },
+      {
+        "device": "co2_sensor",
+        "state": "620 ppm"
+      },
+      {
+        "device": "office_window",
+        "state": "closed"
+      },
+      {
+        "device": "thermostat",
+        "state": "21.5\u00b0C"
+      },
+      {
+        "device": "printer_sensor",
+        "state": "78%"
+      },
+      {
+        "device": "front_door_lock",
+        "state": "unlocked"
+      },
+      {
+        "device": "hallway_motion",
+        "state": "detected"
+      },
+      {
+        "device": "blinds",
+        "state": "open"
+      },
+      {
+        "device": "desk_occupancy",
+        "state": "occupied"
+      }
+    ],
+    "user_question": "Why is the light orange?",
+    "c0_output": "The status_light is orange and not green because Occupancy of meeting room is Detected, Contact Sensor Meeting Room Opening is off.",
+    "active_rule_ids": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "candidate_rules": [
+      {
+        "rule_id": "1",
+        "attributes": {
+          "precondition_similarity": 0.333333,
+          "ownership": 1,
+          "frequency": 65,
+          "occurrence": 3
+        },
+        "c0_topsis_score": 0.830026
+      },
+      {
+        "rule_id": "3",
+        "attributes": {
+          "precondition_similarity": 0.0,
+          "ownership": 0,
+          "frequency": 4,
+          "occurrence": 4
+        },
+        "c0_topsis_score": 0.355730
+      },
+      {
+        "rule_id": "6",
+        "attributes": {
+          "precondition_similarity": 0.0,
+          "ownership": 1,
+          "frequency": 90,
+          "occurrence": 0
+        },
+        "c0_topsis_score": 0.450164
+      }
+    ]
+  },
+  {
+    "id": "TC2",
+    "cc_type": "CC1",
+    "description": "A different rule fired than the one the user expected.",
+    "explainee": {
+      "id": "2",
+      "name": "Bob",
+      "role": "COWORKER",
+      "technicality": "Ntch"
+    },
+    "fact": {
+      "rule_id": "2",
+      "rule_name": "Meeting Room Occupied",
+      "outcome": "The meeting room status light turned orange."
+    },
+    "foil": {
+      "rule_id": "3",
+      "rule_name": "Rain at Lunch",
+      "c0_topsis_score": 0.527918
+    },
+    "system_state": [
+      {
+        "device": "status_light",
+        "state": "orange"
+      },
+      {
+        "device": "meeting_room_door",
+        "state": "closed"
+      },
+      {
+        "device": "meeting_room_motion",
+        "state": "detected"
+      },
+      {
+        "device": "weather",
+        "state": "rainy"
+      },
+      {
+        "device": "clock",
+        "state": "12:10"
+      },
+      {
+        "device": "ventilation",
+        "state": "off"
+      },
+      {
+        "device": "robo_cleaner",
+        "state": "off"
+      },
+      {
+        "device": "robo_cleaner_sensor",
+        "state": "docked"
+      },
+      {
+        "device": "temperature_sensor",
+        "state": "22.8\u00b0C"
+      },
+      {
+        "device": "workday_sensor",
+        "state": "on"
+      },
+      {
+        "device": "desk_lamp",
+        "state": "on"
+      },
+      {
+        "device": "coffee_machine",
+        "state": "on"
+      },
+      {
+        "device": "co2_sensor",
+        "state": "620 ppm"
+      },
+      {
+        "device": "office_window",
+        "state": "closed"
+      },
+      {
+        "device": "thermostat",
+        "state": "21.5\u00b0C"
+      },
+      {
+        "device": "printer_sensor",
+        "state": "78%"
+      },
+      {
+        "device": "front_door_lock",
+        "state": "unlocked"
+      },
+      {
+        "device": "hallway_motion",
+        "state": "detected"
+      },
+      {
+        "device": "blinds",
+        "state": "open"
+      },
+      {
+        "device": "desk_occupancy",
+        "state": "occupied"
+      }
+    ],
+    "user_question": "Why is the light orange?",
+    "c0_output": "The status_light is orange and not blue because Occupancy of meeting room is Detected, Contact Sensor Meeting Room Opening is off.",
+    "active_rule_ids": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "candidate_rules": [
+      {
+        "rule_id": "1",
+        "attributes": {
+          "precondition_similarity": 0.333333,
+          "ownership": 0,
+          "frequency": 65,
+          "occurrence": 0
+        },
+        "c0_topsis_score": 0.443415
+      },
+      {
+        "rule_id": "3",
+        "attributes": {
+          "precondition_similarity": 0.0,
+          "ownership": 1,
+          "frequency": 4,
+          "occurrence": 8
+        },
+        "c0_topsis_score": 0.527918
+      },
+      {
+        "rule_id": "6",
+        "attributes": {
+          "precondition_similarity": 0.0,
+          "ownership": 0,
+          "frequency": 90,
+          "occurrence": 0
+        },
+        "c0_topsis_score": 0.308893
+      }
+    ]
+  },
+  {
+    "id": "TC3",
+    "cc_type": "CC3",
+    "description": "No rule fired, but the user expected one to.",
+    "explainee": {
+      "id": "1",
+      "name": "Alice",
+      "role": "COWORKER",
+      "technicality": "Med"
+    },
+    "fact": {
+      "rule_id": null,
+      "rule_name": null,
+      "outcome": "No automation rule fired. The status light remained off."
+    },
+    "foil": {
+      "rule_id": "1",
+      "rule_name": "Meeting Room Not Occupied",
+      "c0_topsis_score": 0.776953
+    },
+    "system_state": [
+      {
+        "device": "status_light",
+        "state": "off"
+      },
+      {
+        "device": "meeting_room_door",
+        "state": "open"
+      },
+      {
+        "device": "meeting_room_motion",
+        "state": "clear"
+      },
+      {
+        "device": "weather",
+        "state": "sunny"
+      },
+      {
+        "device": "clock",
+        "state": "08:00"
+      },
+      {
+        "device": "ventilation",
+        "state": "off"
+      },
+      {
+        "device": "robo_cleaner",
+        "state": "off"
+      },
+      {
+        "device": "robo_cleaner_sensor",
+        "state": "docked"
+      },
+      {
+        "device": "temperature_sensor",
+        "state": "21.0\u00b0C"
+      },
+      {
+        "device": "workday_sensor",
+        "state": "on"
+      },
+      {
+        "device": "desk_lamp",
+        "state": "off"
+      },
+      {
+        "device": "coffee_machine",
+        "state": "off"
+      },
+      {
+        "device": "co2_sensor",
+        "state": "420 ppm"
+      },
+      {
+        "device": "office_window",
+        "state": "closed"
+      },
+      {
+        "device": "thermostat",
+        "state": "20.5\u00b0C"
+      },
+      {
+        "device": "printer_sensor",
+        "state": "90%"
+      },
+      {
+        "device": "front_door_lock",
+        "state": "locked"
+      },
+      {
+        "device": "hallway_motion",
+        "state": "clear"
+      },
+      {
+        "device": "blinds",
+        "state": "closed"
+      },
+      {
+        "device": "desk_occupancy",
+        "state": "clear"
+      }
+    ],
+    "user_question": "Why is the light off?",
+    "c0_output": "The status_light did not start because not all preconditions were met: No Motion in meeting room is clear, Contact Sensor Meeting Room Opening is on.",
+    "active_rule_ids": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "candidate_rules": [
+      {
+        "rule_id": "1",
+        "attributes": {
+          "precondition_similarity": null,
+          "ownership": 1,
+          "frequency": 65,
+          "occurrence": 3
+        },
+        "c0_topsis_score": 0.776953
+      },
+      {
+        "rule_id": "2",
+        "attributes": {
+          "precondition_similarity": null,
+          "ownership": 1,
+          "frequency": 65,
+          "occurrence": 1
+        },
+        "c0_topsis_score": 0.541346
+      },
+      {
+        "rule_id": "3",
+        "attributes": {
+          "precondition_similarity": null,
+          "ownership": 0,
+          "frequency": 4,
+          "occurrence": 4
+        },
+        "c0_topsis_score": 0.494293
+      },
+      {
+        "rule_id": "4",
+        "attributes": {
+          "precondition_similarity": null,
+          "ownership": 0,
+          "frequency": 86,
+          "occurrence": 2
+        },
+        "c0_topsis_score": 0.515537
+      },
+      {
+        "rule_id": "5",
+        "attributes": {
+          "precondition_similarity": null,
+          "ownership": 1,
+          "frequency": 1,
+          "occurrence": 0
+        },
+        "c0_topsis_score": 0.349784
+      },
+      {
+        "rule_id": "6",
+        "attributes": {
+          "precondition_similarity": null,
+          "ownership": 1,
+          "frequency": 90,
+          "occurrence": 0
+        },
+        "c0_topsis_score": 0.510602
+      }
+    ]
+  }
+]
