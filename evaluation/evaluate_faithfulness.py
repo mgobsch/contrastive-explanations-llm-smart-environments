@@ -28,7 +28,7 @@ import time
 
 # ======================= EDIT YOUR SETTINGS HERE =======================
 # Filenames are relative to the folder containing this script.
-INPUT_FILE = '../results/phase_a/results.xlsx'
+INPUT_FILE = '../results/phase_a/1_generated_explanations.xlsx'
 OUTPUT_FILE = 'results_scored_v6.xlsx'
 GROUND_TRUTH_FILE = 'ground_truth.json'
 SHEET_NAME = 'Results'
