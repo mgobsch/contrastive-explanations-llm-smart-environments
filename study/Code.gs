@@ -10,7 +10,7 @@
 var SHEET_ID = '1uVBdl9cdbfP2r6fCstALj2_TuoDuU5WdtdBeoESOFhA';
 
 // Bot protection
-var MAX_NEW_PER_HOUR = 30;     // more new participants than this within one hour -> study pauses automatically
+var MAX_NEW_PER_HOUR = 40;     // more new participants than this within one hour -> study pauses automatically
 var MAX_BODY_CHARS = 300000;   // larger submissions are rejected (a real one is far smaller)
 var ALERT_EMAIL = '';          // '' = the Google account that owns this script
 
