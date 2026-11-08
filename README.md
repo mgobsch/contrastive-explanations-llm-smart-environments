@@ -48,7 +48,7 @@ cd ../evaluation
 python evaluate_faithfulness.py --help
 ```
 
-**Note on the faithfulness ratings.** `evaluate_faithfulness.py` defines the rubric, the reference and the output format. The final scores in `results/selection/2_faithfulness_scores.xlsx` were produced by Claude Opus 5.5 (medium reasoning effort), which applied this script to every explanation; the hallucination flags were then reviewed by the author. The default evaluator model in the script is an AcademicCloud model.
+**Note on the faithfulness ratings.** `evaluate_faithfulness.py` defines the rubric, the reference and the output format. The final scores in `results/selection/2_faithfulness_scores.xlsx` were produced by Claude Opus 5.5 (medium reasoning effort), which applied this script to every explanation; the hallucination flags were then reviewed by the author. The default evaluator model in the script is an AcademicCloud model. Faithfulness and contrastive quality use weighted scores: faithfulness = F1 0.15 + F2 0.30 + F3 0.15 + F4 0.30 + F5 0.10 (column `faithfulness_final_score_weighted`), contrastive quality = Q1 0.15 + Q2 0.40 + Q3 0.10 + Q4 0.35 (column "CQ Score (weighted)" in `3_quality_ratings.xlsx`).
 
 ## User study
 

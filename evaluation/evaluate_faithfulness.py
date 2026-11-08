@@ -3,7 +3,7 @@
 Requires Python 3.10+, openpyxl, and openai (API runs only).
 Use --dry-run to validate inputs without an API call or workbook mutation.
 Creates a separate workbook; preserves old columns/sheets; appends faith_*.
-Final score = sum of five numeric scores / 5 (0-1). Missing evidence = 0.5.
+Final score = weighted sum (F1 0.15, F2 0.30, F3 0.15, F4 0.30, F5 0.10; 0-1). Missing evidence = 0.5.
 The evaluator also returns an 'evidence' block (verbatim quotes per rule part).
 Every quote is checked against the candidate text, and fact_fidelity /
 foil_fidelity are recomputed in Python from that evidence (0 missing parts
@@ -51,6 +51,11 @@ CRITERIA = (
     'foil_identification', 'foil_fidelity',
     'system_state_correctness',
 )
+
+# Criterion weights: F2/F4 differ most between explanations and catch invented rule properties.
+WEIGHTS = {'fact_identification': 0.15, 'fact_fidelity': 0.30,
+           'foil_identification': 0.15, 'foil_fidelity': 0.30,
+           'system_state_correctness': 0.10}
 
 PREFIX = 'faith_'
 OUTPUT_COLUMNS = [PREFIX + key for key in CRITERIA] + [PREFIX+'final_score', PREFIX+'notes', PREFIX+'evidence']
@@ -443,7 +448,7 @@ def apply_checklist(result, catalog):
 
 
 def aggregate_scores(result):
-    return sum(result['scores'][key] for key in CRITERIA)/len(CRITERIA)
+    return sum(WEIGHTS[key]*result['scores'][key] for key in CRITERIA)
 
 
 def empty_result():
@@ -642,7 +647,7 @@ def main(argv=None):
             if row.get('error'): continue
             if row_is_scored(ws,number,columns):
                 values=[ws.cell(number,columns[PREFIX+key]).value for key in CRITERIA]
-                ws.cell(number,columns[PREFIX+'final_score']).value=sum(values)/len(CRITERIA)
+                ws.cell(number,columns[PREFIX+'final_score']).value=sum(WEIGHTS[key]*value for key,value in zip(CRITERIA,values))
                 ws.cell(number,columns[PREFIX+'final_score']).number_format='0.000'
                 refreshed+=1
         save()
